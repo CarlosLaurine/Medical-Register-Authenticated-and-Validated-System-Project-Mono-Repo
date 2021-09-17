@@ -1,4 +1,4 @@
-package com.carloslaurinedev.medicalregisterapi.resources.exceptions;
+package com.carloslaurinedev.medicalregisterapi.controllers.exceptions;
 
 import java.io.Serializable;
 

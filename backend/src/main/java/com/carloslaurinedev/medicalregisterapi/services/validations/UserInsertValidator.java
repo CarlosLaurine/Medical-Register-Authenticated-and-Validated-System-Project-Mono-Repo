@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.carloslaurinedev.medicalregisterapi.resources.exceptions.FieldMessage;
+import com.carloslaurinedev.medicalregisterapi.controllers.exceptions.FieldMessage;
 import com.carloslaurinedev.medicalregisterapi.dtos.UserInsertDTO;
 import com.carloslaurinedev.medicalregisterapi.repositories.UserRepository;
 

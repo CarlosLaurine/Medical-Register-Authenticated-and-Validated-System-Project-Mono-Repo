@@ -11,10 +11,10 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.carloslaurinedev.medicalregisterapi.controllers.exceptions.FieldMessage;
 import com.carloslaurinedev.medicalregisterapi.dtos.UserUpdateDTO;
 import com.carloslaurinedev.medicalregisterapi.entities.User;
 import com.carloslaurinedev.medicalregisterapi.repositories.UserRepository;
-import com.carloslaurinedev.medicalregisterapi.resources.exceptions.FieldMessage;
 
 public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid, UserUpdateDTO> {
 

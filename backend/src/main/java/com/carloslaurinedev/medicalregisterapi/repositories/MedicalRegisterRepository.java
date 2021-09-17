@@ -14,7 +14,7 @@ import com.carloslaurinedev.medicalregisterapi.entities.MedicalSpecialty;
 @Repository
 public interface MedicalRegisterRepository extends JpaRepository<MedicalRegister, Long> {
 
-	@Query("SELECT DISTINCT product FROM MedicalRegister doctor INNER JOIN doctor.specialties specs WHERE "
+	@Query("SELECT DISTINCT doctor FROM MedicalRegister doctor INNER JOIN doctor.specialties specs WHERE "
 			+ "(COALESCE(:specialties) IS NULL OR specs in :specialties) " + "AND "
 			+ "(:name = '' OR LOWER(doctor.name) LIKE LOWER (CONCAT('%',:name,'%')))")
 	Page<MedicalRegister> search(Pageable pageable, List<MedicalSpecialty> specialties, String name);
