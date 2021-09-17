@@ -31,8 +31,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	private Environment environment;
 
 	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**" };
-	private static final String[] OPERATOR_OR_ADMIN = { "/products/**", "/categories/**" };
-	private static final String[] ADMIN = { "/users/**" };
+	private static final String[] OPERATOR_OR_ADMIN = { "/specialties/**" };
+	private static final String[] ADMIN = { "/users/**", "/doctors/**" };
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -44,16 +44,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 		// H2 Database URLS and Frames Allowance
 		if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
-			http.headers()
-			.frameOptions()
-			.disable();
+			http.headers().frameOptions().disable();
 		}
 
 		http.authorizeRequests()
 		.antMatchers(PUBLIC).permitAll()
 		.antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
 		.antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN")
-		.antMatchers(ADMIN).hasRole("ADMIN").anyRequest().authenticated();
+		.antMatchers(ADMIN).hasRole("ADMIN")
+		.anyRequest().authenticated();
 
 		http.cors().configurationSource(corsConfigurationSource());
 
