@@ -23,7 +23,7 @@ public class MedicalSpecialty implements Serializable {
 	private String name;
 
 	@ManyToMany(mappedBy = "specialties")
-	private Set<MedicalRegister> doctor = new HashSet<>();
+	private Set<MedicalRegister> doctors = new HashSet<>();
 
 	public MedicalSpecialty() {
 
@@ -48,6 +48,10 @@ public class MedicalSpecialty implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<MedicalRegister> getDoctors() {
+		return doctors;
 	}
 
 	@Override
