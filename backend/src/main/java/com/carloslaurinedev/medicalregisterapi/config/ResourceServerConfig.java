@@ -30,9 +30,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Autowired
 	private Environment environment;
 
-	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**", "/viacep/**" };
-	private static final String[] OPERATOR_OR_ADMIN = { "/specialties/**" };
-	private static final String[] ADMIN = { "/users/**", "/doctors/**" };
+	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**", "/gcb-medical-register-api/viacep/**" };
+	private static final String[] OPERATOR_OR_ADMIN = { "/gcb-medical-register-api/specialties/**" };
+	private static final String[] ADMIN = { "/gcb-medical-register-api/users/**", "/gcb-medical-register-api/doctors/**" };
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {

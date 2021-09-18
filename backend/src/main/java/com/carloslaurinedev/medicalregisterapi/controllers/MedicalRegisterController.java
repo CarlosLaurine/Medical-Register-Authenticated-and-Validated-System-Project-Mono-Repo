@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,17 +27,24 @@ import com.carloslaurinedev.medicalregisterapi.dtos.MedicalRegisterWithAddressDT
 import com.carloslaurinedev.medicalregisterapi.dtos.ViaCepAddressDTO;
 import com.carloslaurinedev.medicalregisterapi.services.MedicalRegisterService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 
-@RequestMapping(value = "/doctors")
+@RequestMapping(value = "/gcb-medical-register-api/doctors")
+
+@Api(value = "MedicalRegister Controller")
+@CrossOrigin(origins = "{'/v2/api-docs', '/configuration/ui', 'swagger-resources/**', 'configuration/security', 'swagger-ui.html', 'webjars/**' }")
 
 public class MedicalRegisterController {
 
 	@Autowired
 	private MedicalRegisterService service;
 
+	@ApiOperation(value = "Returns all Preexistent MedicalRegisters Paginated, and can Optionally Return all MedicalRegisters attached (Join Table) to a certain SpecialtyId Request Parameter 'specialtyId' Paginated. It can also return all MedicalRegisters containing the same Name Attribute as the optional RequestParameter 'name'. Finally, since both parameters are equally optional, this Endpoint can return all MedicalRegisters whose respective Attributes match those both RequestParemeters. Returns an HTTP Ok Response Status (200)")
 	@GetMapping
-	public ResponseEntity<Page<MedicalRegisterDTO>> selectAll(Pageable pageable,
+	public ResponseEntity<Page<MedicalRegisterDTO>> selectAllPaged(Pageable pageable,
 			@RequestParam(value = "specialtyId", defaultValue = "0") Long specialtyId,
 			@RequestParam(value = "name", defaultValue = "") String name) {
 
@@ -47,6 +55,7 @@ public class MedicalRegisterController {
 		return ResponseEntity.ok().body(currentPage);
 	}
 
+	@ApiOperation(value = "Returns a Unique Preexistent MedicalRegister as a DTO through the Path Varible 'id'. Returns an HTTP Ok Response Status (200)")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<MedicalRegisterDTO> searchById(@PathVariable Long id) {
 
@@ -55,6 +64,7 @@ public class MedicalRegisterController {
 		return ResponseEntity.ok().body(dto);
 	}
 
+	@ApiOperation(value = "Returns a Unique Preexistent MedicalSpecialty as a MedicalRegisterWithAddressDTO through its Id Attribute. This Special DTO Extends the former MedicalRegisterDTO while also Including all the Address Attributes Returned from an Internal JSON HTTP Request to ViaCEP API with the DTO's CEP Attribute (Obtained through Path Variable 'id'). Returns an HTTP Ok Response Status (200)")
 	@GetMapping(value = "/with-address/{id}")
 	public ResponseEntity<MedicalRegisterWithAddressDTO> searchWithAddressById(@PathVariable Long id) {
 
@@ -71,6 +81,7 @@ public class MedicalRegisterController {
 		return ResponseEntity.ok().body(fullDisplayDTO);
 	}
 
+	@ApiOperation(value = "Returns a List of Preexistent MedicalRegisters as a List<DTO> Collection through the Path Varible 'name'. Returns an HTTP Ok Response Status (200)")
 	@GetMapping(value = "/name/{name}")
 	public ResponseEntity<List<MedicalRegisterDTO>> searchByName(@PathVariable String name) {
 
@@ -78,6 +89,8 @@ public class MedicalRegisterController {
 
 		return ResponseEntity.ok().body(dto);
 	}
+
+	@ApiOperation(value = "Returns a Unique Preexistent MedicalRegister as a DTO through the Path Varible 'crm'. Returns an HTTP Ok Response Status (200)")
 
 	@GetMapping(value = "/crm/{crm}")
 	public ResponseEntity<MedicalRegisterDTO> searchByCrm(@PathVariable Integer crm) {
@@ -87,6 +100,8 @@ public class MedicalRegisterController {
 		return ResponseEntity.ok().body(dto);
 	}
 
+	@ApiOperation(value = "Returns a List of Preexistent MedicalRegisters as a List<DTO> Collection through the Path Varible 'landlinePhone'. Returns an HTTP Ok Response Status (200)")
+
 	@GetMapping(value = "/landline-phone/{landlinePhone}")
 	public ResponseEntity<List<MedicalRegisterDTO>> searchByLandlinePhone(@PathVariable Long landlinePhone) {
 
@@ -94,6 +109,8 @@ public class MedicalRegisterController {
 
 		return ResponseEntity.ok().body(dto);
 	}
+
+	@ApiOperation(value = "Returns a Unique Preexistent MedicalRegister as a DTO through the Path Varible 'cellPhone'. Returns an HTTP Ok Response Status (200)")
 
 	@GetMapping(value = "/cellphone/{cellPhone}")
 	public ResponseEntity<MedicalRegisterDTO> searchByCellPhone(@PathVariable Long cellPhone) {
@@ -103,6 +120,8 @@ public class MedicalRegisterController {
 		return ResponseEntity.ok().body(dto);
 	}
 
+	@ApiOperation(value = "Returns a List of Preexistent MedicalRegisters as a List<DTO> Collection through the Path Varible 'cep'. Returns an HTTP Ok Response Status (200)")
+
 	@GetMapping(value = "/cep/{cep}")
 	public ResponseEntity<List<MedicalRegisterDTO>> searchByCep(@PathVariable Integer cep) {
 
@@ -110,6 +129,8 @@ public class MedicalRegisterController {
 
 		return ResponseEntity.ok().body(dto);
 	}
+
+	@ApiOperation(value = "Persists a New MedicalRegister at the Database through a DTO at the Request Body and Returns a MedicalRegisterWithAddressDTO through the Path Variable 'id'. This Special DTO Extends the former MedicalRegisterDTO while also Including all the Address Attributes Returned from an Internal JSON HTTP Request to ViaCEP API with the DTO's CEP Attribute (Obtained through Path Variable 'id'). It also returns a 'Created' HTML Status (201) along with the New User's URI at the Header")
 
 	@PostMapping
 	public ResponseEntity<MedicalRegisterWithAddressDTO> insert(@Valid @RequestBody MedicalRegisterDTO dto) {
@@ -129,6 +150,8 @@ public class MedicalRegisterController {
 		return ResponseEntity.created(uri).body(fullDisplayDTO);
 	}
 
+	@ApiOperation(value = "Updates a Preexistent MedicalRegister at the Database through a DTO at the Request Body along with the Path Variable 'id' and Returns a MedicalRegisterWithAddressDTO through the Path Variable 'id'. This Special DTO Extends the former MedicalRegisterDTO while also Including all the Address Attributes Returned from an Internal JSON HTTP Request to ViaCEP API with the DTO's CEP Attribute (Obtained through Path Variable 'id'). Returns an HTML Ok Status (200)")
+
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<MedicalRegisterDTO> update(@PathVariable Long id,
 			@Valid @RequestBody MedicalRegisterDTO dto) {
@@ -136,8 +159,10 @@ public class MedicalRegisterController {
 		dto = service.update(id, dto);
 
 		return ResponseEntity.ok().body(dto);
+
 	}
 
+	@ApiOperation(value = "Performs a Soft Deletion Operation with a Preexistent MedicalRegister at the Database through the PathVariable Id, Updating the Object's 'deleted' Attribute Value to 'True' and Blocking its appearance on future Select/Search Queries. It does not Physically Delete it from the Database. Returns an HTTP No Content Response Status (204)")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> softDelete(@PathVariable Long id) {
 

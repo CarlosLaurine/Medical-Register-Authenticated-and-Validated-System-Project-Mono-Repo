@@ -1,8 +1,6 @@
 package com.carloslaurinedev.medicalregisterapi.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -45,19 +43,8 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-	@org.springframework.transaction.annotation.Transactional(readOnly = true)
-	public List<UserDTO> findAll() {
-
-		List<User> entityList = repository.findAll();
-
-		List<UserDTO> dtoList = entityList.stream().map(entity -> new UserDTO(entity)).collect(Collectors.toList());
-
-		return dtoList;
-
-	}
-
 	@Transactional(readOnly = true)
-	public Page<UserDTO> findAllPaged(Pageable pageable) {
+	public Page<UserDTO> selectAllPaged(Pageable pageable) {
 
 		Page<User> entityPage = repository.findAll(pageable);
 
@@ -68,7 +55,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Transactional(readOnly = true)
-	public UserDTO findById(Long id) {
+	public UserDTO searchById(Long id) {
 
 		Optional<User> obj = repository.findById(id);
 

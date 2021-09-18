@@ -38,7 +38,7 @@ public class MedicalRegisterDTO implements Serializable {
 	@Digits(integer = 9, fraction = 0, message = "CEP must contain a maximum of 9 Integer Number Characters")
 	private Integer cep;
 
-	@Size(min = 2, message = "Minimum of Specialities to be Included in the Register is Two")
+	@Size(min = 2, message = "Minimum of Specialities to be Included in the Register is TWO (2)")
 	private List<MedicalSpecialtyDTO> specialties = new ArrayList<>();
 
 	public MedicalRegisterDTO() {
