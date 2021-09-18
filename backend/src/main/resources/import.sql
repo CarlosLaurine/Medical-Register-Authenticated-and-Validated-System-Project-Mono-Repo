@@ -8,19 +8,19 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
 
-INSERT INTO tb_specialty (name) VALUES ('Alergologia');
-INSERT INTO tb_specialty (name) VALUES ('Angiologia');
-INSERT INTO tb_specialty (name) VALUES ('Buco maxilo');
-INSERT INTO tb_specialty (name) VALUES ('Cardiologia clínca');
-INSERT INTO tb_specialty (name) VALUES ('Cardiologia infantil');
-INSERT INTO tb_specialty (name) VALUES ('Cirurgia cabeça e pescoço');
-INSERT INTO tb_specialty (name) VALUES ('Cirurgia cardíaca');
-INSERT INTO tb_specialty (name) VALUES ('Cirurgia de tórax');
+INSERT INTO tb_specialty (name, deleted) VALUES ('Alergologia', false);
+INSERT INTO tb_specialty (name, deleted) VALUES ('Angiologia', false);
+INSERT INTO tb_specialty (name, deleted) VALUES ('Buco maxilo', false);
+INSERT INTO tb_specialty (name, deleted) VALUES ('Cardiologia clínca', false);
+INSERT INTO tb_specialty (name, deleted) VALUES ('Cardiologia infantil', false);
+INSERT INTO tb_specialty (name, deleted) VALUES ('Cirurgia cabeça e pescoço', false);
+INSERT INTO tb_specialty (name, deleted) VALUES ('Cirurgia cardíaca', false);
+INSERT INTO tb_specialty (name, deleted) VALUES ('Cirurgia de tórax', false);
 
-INSERT INTO tb_register (name, crm, landline_phone, cell_phone, cep) VALUES ('José de Assis', 74259, 991345699, 36247170, 49038561)
-INSERT INTO tb_register (name, crm, landline_phone, cell_phone, cep) VALUES ('Carlos Laurine', 98643, 995702214, 32239022, 69911690)
-INSERT INTO tb_register (name, crm, landline_phone, cell_phone, cep) VALUES ('Plínio Borges', 81885, 987252233, 36259997, 81510490)
-INSERT INTO tb_register (name, crm, landline_phone, cell_phone, cep) VALUES ('Renan Marinho', 32190, 988839516, 32243638, 68905540)
+INSERT INTO tb_register (name, crm, landline_phone, cell_phone, cep, deleted) VALUES ('José de Assis', 74259, 36247170, 991345699, 49038561, false)
+INSERT INTO tb_register (name, crm, landline_phone, cell_phone, cep, deleted) VALUES ('Carlos Laurine', 98643, 32239022, 995702214, 69911690, false)
+INSERT INTO tb_register (name, crm, landline_phone, cell_phone, cep, deleted) VALUES ('Plínio Borges', 81885, 36259997, 987252233, 81510490, false)
+INSERT INTO tb_register (name, crm, landline_phone, cell_phone, cep, deleted) VALUES ('Renan Marinho', 32190, 32243638, 988839516, 68905540, false)
 
 
 

@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.carloslaurinedev.medicalregisterapi.dtos.MedicalRegisterDTO;
-import com.carloslaurinedev.medicalregisterapi.dtos.MedicalRegisterInsertDTO;
+import com.carloslaurinedev.medicalregisterapi.dtos.MedicalRegisterWithAddressDTO;
 import com.carloslaurinedev.medicalregisterapi.dtos.ViaCepAddressDTO;
 import com.carloslaurinedev.medicalregisterapi.services.MedicalRegisterService;
 
@@ -36,67 +36,83 @@ public class MedicalRegisterController {
 	private MedicalRegisterService service;
 
 	@GetMapping
-	public ResponseEntity<Page<MedicalRegisterDTO>> findAll(Pageable pageable,
+	public ResponseEntity<Page<MedicalRegisterDTO>> selectAll(Pageable pageable,
 			@RequestParam(value = "specialtyId", defaultValue = "0") Long specialtyId,
 			@RequestParam(value = "name", defaultValue = "") String name) {
 
 		// Spring Standard Pageable Request Parameters - "page","size" and "sort"
 
-		Page<MedicalRegisterDTO> currentPage = service.findAllPaged(pageable, specialtyId, name.trim());
+		Page<MedicalRegisterDTO> currentPage = service.selectAllPaged(pageable, specialtyId, name.trim());
 
 		return ResponseEntity.ok().body(currentPage);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<MedicalRegisterDTO> findById(@PathVariable Long id) {
+	public ResponseEntity<MedicalRegisterDTO> searchById(@PathVariable Long id) {
 
-		MedicalRegisterDTO dto = service.findById(id);
+		MedicalRegisterDTO dto = service.searchById(id);
 
 		return ResponseEntity.ok().body(dto);
 	}
 
-	@GetMapping(value = "/name/{name}")
-	public ResponseEntity<List<MedicalRegisterDTO>> findByName(@PathVariable String name) {
+	@GetMapping(value = "/with-address/{id}")
+	public ResponseEntity<MedicalRegisterWithAddressDTO> searchWithAddressById(@PathVariable Long id) {
 
-		List<MedicalRegisterDTO> dto = service.findByName(name);
+		MedicalRegisterDTO dto = service.searchById(id);
+
+		String url = "https://viacep.com.br/ws/" + dto.getCep() + "/json/";
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		ViaCepAddressDTO address = restTemplate.getForObject(url, ViaCepAddressDTO.class);
+
+		MedicalRegisterWithAddressDTO fullDisplayDTO = new MedicalRegisterWithAddressDTO(dto, address);
+
+		return ResponseEntity.ok().body(fullDisplayDTO);
+	}
+
+	@GetMapping(value = "/name/{name}")
+	public ResponseEntity<List<MedicalRegisterDTO>> searchByName(@PathVariable String name) {
+
+		List<MedicalRegisterDTO> dto = service.searchByName(name);
 
 		return ResponseEntity.ok().body(dto);
 	}
 
 	@GetMapping(value = "/crm/{crm}")
-	public ResponseEntity<MedicalRegisterDTO> findByCrm(@PathVariable Integer crm) {
+	public ResponseEntity<MedicalRegisterDTO> searchByCrm(@PathVariable Integer crm) {
 
-		MedicalRegisterDTO dto = service.findByCrm(crm);
-
-		return ResponseEntity.ok().body(dto);
-	}
-
-	@GetMapping(value = "/landlinePhone/{landlinePhone}")
-	public ResponseEntity<List<MedicalRegisterDTO>> findByLandlinePhone(@PathVariable Long landlinePhone) {
-
-		List<MedicalRegisterDTO> dto = service.findByLandlinePhone(landlinePhone);
+		MedicalRegisterDTO dto = service.searchByCrm(crm);
 
 		return ResponseEntity.ok().body(dto);
 	}
 
-	@GetMapping(value = "/cellPhone/{cellPhone}")
-	public ResponseEntity<MedicalRegisterDTO> findByCellPhone(@PathVariable Long cellPhone) {
+	@GetMapping(value = "/landline-phone/{landlinePhone}")
+	public ResponseEntity<List<MedicalRegisterDTO>> searchByLandlinePhone(@PathVariable Long landlinePhone) {
 
-		MedicalRegisterDTO dto = service.findByCellphone(cellPhone);
+		List<MedicalRegisterDTO> dto = service.searchByLandlinePhone(landlinePhone);
+
+		return ResponseEntity.ok().body(dto);
+	}
+
+	@GetMapping(value = "/cellphone/{cellPhone}")
+	public ResponseEntity<MedicalRegisterDTO> searchByCellPhone(@PathVariable Long cellPhone) {
+
+		MedicalRegisterDTO dto = service.searchByCellphone(cellPhone);
 
 		return ResponseEntity.ok().body(dto);
 	}
 
 	@GetMapping(value = "/cep/{cep}")
-	public ResponseEntity<List<MedicalRegisterDTO>> findByCep(@PathVariable Integer cep) {
+	public ResponseEntity<List<MedicalRegisterDTO>> searchByCep(@PathVariable Integer cep) {
 
-		List<MedicalRegisterDTO> dto = service.findByCep(cep);
+		List<MedicalRegisterDTO> dto = service.searchByCep(cep);
 
 		return ResponseEntity.ok().body(dto);
 	}
 
 	@PostMapping
-	public ResponseEntity<MedicalRegisterInsertDTO> insert(@Valid @RequestBody MedicalRegisterDTO dto) {
+	public ResponseEntity<MedicalRegisterWithAddressDTO> insert(@Valid @RequestBody MedicalRegisterDTO dto) {
 
 		dto = service.insert(dto);
 
@@ -108,9 +124,9 @@ public class MedicalRegisterController {
 
 		ViaCepAddressDTO address = restTemplate.getForObject(url, ViaCepAddressDTO.class);
 
-		MedicalRegisterInsertDTO insertDTO = new MedicalRegisterInsertDTO(dto, address);
+		MedicalRegisterWithAddressDTO fullDisplayDTO = new MedicalRegisterWithAddressDTO(dto, address);
 
-		return ResponseEntity.created(uri).body(insertDTO);
+		return ResponseEntity.created(uri).body(fullDisplayDTO);
 	}
 
 	@PutMapping(value = "/{id}")
@@ -123,9 +139,9 @@ public class MedicalRegisterController {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> softDelete(@PathVariable Long id) {
 
-		service.delete(id);
+		service.softDelete(id);
 
 		return ResponseEntity.noContent().build();
 	}

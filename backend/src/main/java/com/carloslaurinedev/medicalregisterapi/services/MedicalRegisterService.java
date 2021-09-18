@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -34,24 +33,12 @@ public class MedicalRegisterService {
 	@Autowired
 	private MedicalSpecialtyRepository medicalSpecialtyRepository;
 
-	@org.springframework.transaction.annotation.Transactional(readOnly = true)
-	public List<MedicalRegisterDTO> findAll() {
-
-		List<MedicalRegister> entityList = repository.findAll();
-
-		List<MedicalRegisterDTO> dtoList = entityList.stream().map(entity -> new MedicalRegisterDTO(entity))
-				.collect(Collectors.toList());
-
-		return dtoList;
-
-	}
-
 	@Transactional(readOnly = true)
 	// In case the System runs on a different pom.xml Version than 2.4.4 where the
 	// .getOne() Function is Deprecated and can be easily replaced by the getById()
 	// Function
 	@SuppressWarnings("deprecation")
-	public Page<MedicalRegisterDTO> findAllPaged(Pageable pageable, Long categoryId, String name) {
+	public Page<MedicalRegisterDTO> selectAllPaged(Pageable pageable, Long categoryId, String name) {
 
 		List<MedicalSpecialty> specialties = (categoryId == 0) ? null
 				: Arrays.asList(medicalSpecialtyRepository.getOne(categoryId));
@@ -68,7 +55,7 @@ public class MedicalRegisterService {
 	}
 
 	@Transactional(readOnly = true)
-	public MedicalRegisterDTO findById(Long id) {
+	public MedicalRegisterDTO searchById(Long id) {
 
 		Optional<MedicalRegister> obj = repository.findById(id);
 
@@ -81,7 +68,7 @@ public class MedicalRegisterService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<MedicalRegisterDTO> findByName(String name) {
+	public List<MedicalRegisterDTO> searchByName(String name) {
 
 		try {
 
@@ -98,7 +85,7 @@ public class MedicalRegisterService {
 	}
 
 	@Transactional(readOnly = true)
-	public MedicalRegisterDTO findByCrm(Integer crm) {
+	public MedicalRegisterDTO searchByCrm(Integer crm) {
 
 		MedicalRegister entity = repository.findByCrm(crm);
 
@@ -113,7 +100,7 @@ public class MedicalRegisterService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<MedicalRegisterDTO> findByLandlinePhone(Long landlinePhone) {
+	public List<MedicalRegisterDTO> searchByLandlinePhone(Long landlinePhone) {
 
 		try {
 
@@ -130,7 +117,7 @@ public class MedicalRegisterService {
 	}
 
 	@Transactional(readOnly = true)
-	public MedicalRegisterDTO findByCellphone(Long cellPhone) {
+	public MedicalRegisterDTO searchByCellphone(Long cellPhone) {
 
 		MedicalRegister entity = repository.findByCellPhone(cellPhone);
 
@@ -145,7 +132,7 @@ public class MedicalRegisterService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<MedicalRegisterDTO> findByCep(Integer cep) {
+	public List<MedicalRegisterDTO> searchByCep(Integer cep) {
 
 		try {
 
@@ -199,7 +186,7 @@ public class MedicalRegisterService {
 
 	}
 
-	public void delete(Long id) {
+	public void softDelete(Long id) {
 
 		try {
 

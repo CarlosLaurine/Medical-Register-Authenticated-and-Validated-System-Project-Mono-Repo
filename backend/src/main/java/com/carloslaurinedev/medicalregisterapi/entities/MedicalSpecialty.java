@@ -11,8 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name = "tb_specialty")
+
+//Soft Delete Override Custom Update SQL Command to replace Entity Delete Commands reaching the Database
+//while Updating Boolean Attribute "deleted" to "TRUE" instead of Physically Deleting the Data
+@SQLDelete(sql = "UPDATE tb_specialty SET deleted = true WHERE id=?")
+//SQL Conditional "where" filter added to future Select/Search Queries in order to make Soft Deleted Rows Invisible 
+@Where(clause = "deleted=false")
 public class MedicalSpecialty implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,6 +30,8 @@ public class MedicalSpecialty implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+
+	private boolean deleted = Boolean.FALSE;
 
 	@ManyToMany(mappedBy = "specialties")
 	private Set<MedicalRegister> doctors = new HashSet<>();
@@ -48,6 +59,10 @@ public class MedicalSpecialty implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
 	}
 
 	public Set<MedicalRegister> getDoctors() {

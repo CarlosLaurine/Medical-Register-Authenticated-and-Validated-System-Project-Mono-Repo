@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.carloslaurinedev.medicalregisterapi.entities.MedicalRegister;
 import com.carloslaurinedev.medicalregisterapi.entities.MedicalSpecialty;
 
@@ -13,12 +18,27 @@ public class MedicalRegisterDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	@NotBlank
+	@Size(max = 120, min = 3, message = "Name must contain between 3 and 120 Characters")
 	private String name;
+
+	@NotNull
+	@Digits(integer = 7, fraction = 0, message = "CRM must contain a maximum of 7 Integer Number Characters")
 	private Integer crm;
+
+	@NotNull
+	@Digits(integer = 13, fraction = 0, message = "Landline Phone must contain a maximum of 13 Integer Number Characters")
 	private Long landlinePhone;
+
+	@NotNull
+	@Digits(integer = 13, fraction = 0, message = "CellPhone must contain a maximum of 13 Integer Number Characters")
 	private Long cellPhone;
+
+	@NotNull
+	@Digits(integer = 9, fraction = 0, message = "CEP must contain a maximum of 9 Integer Number Characters")
 	private Integer cep;
 
+	@Size(min = 2, message = "Minimum of Specialities to be Included in the Register is Two")
 	private List<MedicalSpecialtyDTO> specialties = new ArrayList<>();
 
 	public MedicalRegisterDTO() {

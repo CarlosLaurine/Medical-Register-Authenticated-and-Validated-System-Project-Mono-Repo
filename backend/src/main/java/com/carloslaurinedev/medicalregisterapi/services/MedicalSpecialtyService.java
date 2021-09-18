@@ -1,8 +1,6 @@
 package com.carloslaurinedev.medicalregisterapi.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -26,20 +24,8 @@ public class MedicalSpecialtyService {
 	@Autowired
 	private MedicalSpecialtyRepository repository;
 
-	@org.springframework.transaction.annotation.Transactional(readOnly = true)
-	public List<MedicalSpecialtyDTO> findAll() {
-
-		List<MedicalSpecialty> entityList = repository.findAll();
-
-		List<MedicalSpecialtyDTO> dtoList = entityList.stream().map(entity -> new MedicalSpecialtyDTO(entity))
-				.collect(Collectors.toList());
-
-		return dtoList;
-
-	}
-
 	@Transactional(readOnly = true)
-	public Page<MedicalSpecialtyDTO> findAllPaged(Pageable pageable) {
+	public Page<MedicalSpecialtyDTO> selectAllPaged(Pageable pageable) {
 
 		Page<MedicalSpecialty> entityPage = repository.findAll(pageable);
 
@@ -50,7 +36,7 @@ public class MedicalSpecialtyService {
 	}
 
 	@Transactional(readOnly = true)
-	public MedicalSpecialtyDTO findById(Long id) {
+	public MedicalSpecialtyDTO searchById(Long id) {
 
 		Optional<MedicalSpecialty> obj = repository.findById(id);
 
@@ -98,7 +84,7 @@ public class MedicalSpecialtyService {
 
 	}
 
-	public void delete(Long id) {
+	public void softDelete(Long id) {
 
 		try {
 

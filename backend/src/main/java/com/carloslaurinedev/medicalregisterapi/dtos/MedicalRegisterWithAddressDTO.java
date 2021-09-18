@@ -1,16 +1,16 @@
 package com.carloslaurinedev.medicalregisterapi.dtos;
 
-public class MedicalRegisterInsertDTO extends MedicalRegisterDTO {
+public class MedicalRegisterWithAddressDTO extends MedicalRegisterDTO {
 
 	private static final long serialVersionUID = 1L;
 
 	private ViaCepAddressDTO address;
 
-	public MedicalRegisterInsertDTO() {
+	public MedicalRegisterWithAddressDTO() {
 
 	}
 
-	public MedicalRegisterInsertDTO(MedicalRegisterDTO registerDTO, ViaCepAddressDTO viaCepDTO) {
+	public MedicalRegisterWithAddressDTO(MedicalRegisterDTO registerDTO, ViaCepAddressDTO viaCepDTO) {
 		super(registerDTO);
 		address = viaCepDTO;
 

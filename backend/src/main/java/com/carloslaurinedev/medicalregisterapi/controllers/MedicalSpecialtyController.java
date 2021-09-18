@@ -29,17 +29,17 @@ public class MedicalSpecialtyController {
 	private MedicalSpecialtyService service;
 
 	@GetMapping
-	public ResponseEntity<Page<MedicalSpecialtyDTO>> findAll(Pageable pageable) {
+	public ResponseEntity<Page<MedicalSpecialtyDTO>> selectAll(Pageable pageable) {
 
-		Page<MedicalSpecialtyDTO> currentPage = service.findAllPaged(pageable);
+		Page<MedicalSpecialtyDTO> currentPage = service.selectAllPaged(pageable);
 
 		return ResponseEntity.ok().body(currentPage);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<MedicalSpecialtyDTO> findById(@PathVariable Long id) {
+	public ResponseEntity<MedicalSpecialtyDTO> searchById(@PathVariable Long id) {
 
-		MedicalSpecialtyDTO dto = service.findById(id);
+		MedicalSpecialtyDTO dto = service.searchById(id);
 
 		return ResponseEntity.ok().body(dto);
 	}
@@ -63,9 +63,9 @@ public class MedicalSpecialtyController {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> softDelete(@PathVariable Long id) {
 
-		service.delete(id);
+		service.softDelete(id);
 
 		return ResponseEntity.noContent().build();
 	}

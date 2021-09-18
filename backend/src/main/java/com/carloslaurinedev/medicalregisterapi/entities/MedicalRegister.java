@@ -12,9 +12,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "tb_register")
+@Table(name = "tb_register", uniqueConstraints = @UniqueConstraint(columnNames = { "crm", "cellPhone" }))
+
+//Soft Delete Override Custom Update SQL Command to replace Entity Delete Commands reaching the Database
+//while Updating Boolean Attribute "deleted" to "TRUE" instead of Physically Deleting the Data
+@SQLDelete(sql = "UPDATE tb_register SET deleted = true WHERE id=?")
+//SQL Conditional "where" filter added to future Select/Search Queries in order to make Soft Deleted Rows Invisible 
+@Where(clause = "deleted=false")
+
 public class MedicalRegister implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,14 +34,16 @@ public class MedicalRegister implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+
 	private Integer crm;
 	private Long landlinePhone;
 	private Long cellPhone;
 	private Integer cep;
 
+	private boolean deleted = Boolean.FALSE;
+
 	@ManyToMany
 	@JoinTable(name = "tb_register_specialty", joinColumns = @JoinColumn(name = "register_id"), inverseJoinColumns = @JoinColumn(name = "specialty_id"))
-
 	private Set<MedicalSpecialty> specialties = new HashSet<>();
 
 	public MedicalRegister() {
@@ -93,6 +106,10 @@ public class MedicalRegister implements Serializable {
 
 	public void setCep(Integer cep) {
 		this.cep = cep;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
 	}
 
 	public Set<MedicalSpecialty> getSpecialties() {
