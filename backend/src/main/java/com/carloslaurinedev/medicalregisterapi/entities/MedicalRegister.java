@@ -29,7 +29,7 @@ public class MedicalRegister implements Serializable {
 	private Integer cep;
 
 	@ManyToMany
-	@JoinTable(name = "tb_doctor_specialty", joinColumns = @JoinColumn(name = "medical_Register_id"), inverseJoinColumns = @JoinColumn(name = "specialty_id"))
+	@JoinTable(name = "tb_register_specialty", joinColumns = @JoinColumn(name = "register_id"), inverseJoinColumns = @JoinColumn(name = "specialty_id"))
 
 	private Set<MedicalSpecialty> specialties = new HashSet<>();
 
