@@ -2,7 +2,7 @@ package com.carloslaurinedev.medicalregisterapi.dtos;
 
 import java.io.Serializable;
 
-public class CepResponseDTO implements Serializable {
+public class ViaCepAddressDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -14,7 +14,11 @@ public class CepResponseDTO implements Serializable {
 	private String uf;
 	private String unidade;
 
-	public CepResponseDTO(String cep, String logradouro, String complemento, String bairro, String localidade,
+	public ViaCepAddressDTO() {
+
+	}
+
+	public ViaCepAddressDTO(String cep, String logradouro, String complemento, String bairro, String localidade,
 			String uf, String unidade) {
 		super();
 		this.cep = cep;

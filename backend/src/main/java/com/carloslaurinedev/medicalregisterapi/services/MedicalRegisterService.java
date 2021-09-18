@@ -1,5 +1,6 @@
 package com.carloslaurinedev.medicalregisterapi.services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -79,6 +80,87 @@ public class MedicalRegisterService {
 
 	}
 
+	@Transactional(readOnly = true)
+	public List<MedicalRegisterDTO> findByName(String name) {
+
+		try {
+
+			List<MedicalRegister> entityList = repository.findByName(name);
+
+			return tranformEntityListIntoDtoList(entityList);
+
+		} catch (IllegalArgumentException e) {
+
+			throw new ResourceNotFoundException("Entity Not Found");
+
+		}
+
+	}
+
+	@Transactional(readOnly = true)
+	public MedicalRegisterDTO findByCrm(Integer crm) {
+
+		MedicalRegister entity = repository.findByCrm(crm);
+
+		if (entity == null) {
+			throw new ResourceNotFoundException("Entity Not Found");
+		}
+
+		MedicalRegisterDTO dto = new MedicalRegisterDTO(entity, entity.getSpecialties());
+
+		return dto;
+
+	}
+
+	@Transactional(readOnly = true)
+	public List<MedicalRegisterDTO> findByLandlinePhone(Long landlinePhone) {
+
+		try {
+
+			List<MedicalRegister> entityList = repository.findByLandlinePhone(landlinePhone);
+
+			return tranformEntityListIntoDtoList(entityList);
+
+		} catch (IllegalArgumentException e) {
+
+			throw new ResourceNotFoundException("Entity Not Found");
+
+		}
+
+	}
+
+	@Transactional(readOnly = true)
+	public MedicalRegisterDTO findByCellphone(Long cellPhone) {
+
+		MedicalRegister entity = repository.findByCellPhone(cellPhone);
+
+		if (entity == null) {
+			throw new ResourceNotFoundException("Entity Not Found");
+		}
+
+		MedicalRegisterDTO dto = new MedicalRegisterDTO(entity, entity.getSpecialties());
+
+		return dto;
+
+	}
+
+	@Transactional(readOnly = true)
+	public List<MedicalRegisterDTO> findByCep(Integer cep) {
+
+		try {
+
+			List<MedicalRegister> entityList = repository.findByCep(cep);
+
+			return tranformEntityListIntoDtoList(entityList);
+
+		} catch (IllegalArgumentException e) {
+
+			throw new ResourceNotFoundException("Entity Not Found");
+
+		}
+
+	}
+
 	@Transactional
 	public MedicalRegisterDTO insert(MedicalRegisterDTO dto) {
 
@@ -86,7 +168,7 @@ public class MedicalRegisterService {
 
 		tranformDtoIntoEntity(entity, dto);
 
-		dto = new MedicalRegisterDTO(repository.save(entity));
+		dto = new MedicalRegisterDTO(repository.save(entity), entity.getSpecialties());
 
 		return dto;
 	}
@@ -162,4 +244,17 @@ public class MedicalRegisterService {
 		}
 	}
 
+	private List<MedicalRegisterDTO> tranformEntityListIntoDtoList(List<MedicalRegister> entityList) {
+
+		List<MedicalRegisterDTO> dtoList = new ArrayList<>();
+
+		for (MedicalRegister medicalRegister : entityList) {
+
+			dtoList.add(new MedicalRegisterDTO(medicalRegister, medicalRegister.getSpecialties()));
+
+		}
+
+		return dtoList;
+
+	}
 }

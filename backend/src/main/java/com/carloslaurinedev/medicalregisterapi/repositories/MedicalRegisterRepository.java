@@ -22,12 +22,20 @@ public interface MedicalRegisterRepository extends JpaRepository<MedicalRegister
 	@Query("SELECT doctor from MedicalRegister doctor JOIN FETCH doctor.specialties WHERE doctor IN :doctors")
 	List<MedicalRegister> findDoctorsWithTheirRespectiveSpecialties(List<MedicalRegister> doctors);
 
-	MedicalRegister findByName(String name);
+	// Returns a List, since multiple Doctors can have the same Name
+	List<MedicalRegister> findByName(String name);
 
+	// Returns a single MedicalRegister Object, since a Doctor's CRM is Exclusive
 	MedicalRegister findByCrm(Integer crm);
 
-	MedicalRegister findBylandlinePhone(Integer cell);
+	// Returns a List, since multiple Doctors can have the same Landline Phone
+	List<MedicalRegister> findByLandlinePhone(Long landlinePhone);
 
-	MedicalRegister findBycellPhone(Integer landlinePhone);
+	// Returns a single MedicalRegister Object, since a Doctor's Cell Phone is
+	// Exclusive
+	MedicalRegister findByCellPhone(Long cellPhone);
+
+	// Returns a List, since multiple Doctors can have the same CEP
+	List<MedicalRegister> findByCep(Integer cep);
 
 }

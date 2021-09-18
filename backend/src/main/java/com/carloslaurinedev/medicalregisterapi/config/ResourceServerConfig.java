@@ -30,7 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Autowired
 	private Environment environment;
 
-	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**" };
+	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**", "/viacep/**" };
 	private static final String[] OPERATOR_OR_ADMIN = { "/specialties/**" };
 	private static final String[] ADMIN = { "/users/**", "/doctors/**" };
 

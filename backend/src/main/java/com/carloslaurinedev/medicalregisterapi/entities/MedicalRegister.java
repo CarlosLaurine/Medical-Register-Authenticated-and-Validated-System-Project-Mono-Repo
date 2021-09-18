@@ -24,8 +24,8 @@ public class MedicalRegister implements Serializable {
 	private Long id;
 	private String name;
 	private Integer crm;
-	private Integer landlinePhone;
-	private Integer cellPhone;
+	private Long landlinePhone;
+	private Long cellPhone;
 	private Integer cep;
 
 	@ManyToMany
@@ -37,7 +37,7 @@ public class MedicalRegister implements Serializable {
 
 	}
 
-	public MedicalRegister(Long id, String name, Integer crm, Integer landlinePhone, Integer cellPhone, Integer cep) {
+	public MedicalRegister(Long id, String name, Integer crm, Long landlinePhone, Long cellPhone, Integer cep) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -71,19 +71,19 @@ public class MedicalRegister implements Serializable {
 		this.crm = crm;
 	}
 
-	public Integer getLandlinePhone() {
+	public Long getLandlinePhone() {
 		return landlinePhone;
 	}
 
-	public void setLandlinePhone(Integer landlinePhone) {
+	public void setLandlinePhone(Long landlinePhone) {
 		this.landlinePhone = landlinePhone;
 	}
 
-	public Integer getCellPhone() {
+	public Long getCellPhone() {
 		return cellPhone;
 	}
 
-	public void setCellPhone(Integer cellPhone) {
+	public void setCellPhone(Long cellPhone) {
 		this.cellPhone = cellPhone;
 	}
 

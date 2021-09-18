@@ -15,8 +15,8 @@ public class MedicalRegisterDTO implements Serializable {
 	private Long id;
 	private String name;
 	private Integer crm;
-	private Integer landlinePhone;
-	private Integer cellPhone;
+	private Long landlinePhone;
+	private Long cellPhone;
 	private Integer cep;
 
 	private List<MedicalSpecialtyDTO> specialties = new ArrayList<>();
@@ -25,8 +25,7 @@ public class MedicalRegisterDTO implements Serializable {
 
 	}
 
-	public MedicalRegisterDTO(Long id, String name, Integer crm, Integer landlinePhone, Integer cellPhone,
-			Integer cep) {
+	public MedicalRegisterDTO(Long id, String name, Integer crm, Long landlinePhone, Long cellPhone, Integer cep) {
 		this.id = id;
 		this.name = name;
 		this.crm = crm;
@@ -42,6 +41,16 @@ public class MedicalRegisterDTO implements Serializable {
 		landlinePhone = entity.getLandlinePhone();
 		cellPhone = entity.getCellPhone();
 		cep = entity.getCep();
+	}
+
+	public MedicalRegisterDTO(MedicalRegisterDTO dto) {
+		id = dto.getId();
+		name = dto.getName();
+		crm = dto.getCrm();
+		landlinePhone = dto.getLandlinePhone();
+		cellPhone = dto.getCellPhone();
+		cep = dto.getCep();
+		dto.getSpecialties().forEach(specialty -> this.specialties.add(specialty));
 	}
 
 	public MedicalRegisterDTO(MedicalRegister doctor, Set<MedicalSpecialty> specialties) {
@@ -75,19 +84,19 @@ public class MedicalRegisterDTO implements Serializable {
 		this.crm = crm;
 	}
 
-	public Integer getLandlinePhone() {
+	public Long getLandlinePhone() {
 		return landlinePhone;
 	}
 
-	public void setLandlinePhone(Integer landlinePhone) {
+	public void setLandlinePhone(Long landlinePhone) {
 		this.landlinePhone = landlinePhone;
 	}
 
-	public Integer getCellPhone() {
+	public Long getCellPhone() {
 		return cellPhone;
 	}
 
-	public void setCellPhone(Integer cellPhone) {
+	public void setCellPhone(Long cellPhone) {
 		this.cellPhone = cellPhone;
 	}
 
