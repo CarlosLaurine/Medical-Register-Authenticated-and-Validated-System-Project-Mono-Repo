@@ -60,6 +60,18 @@ public class MedicalRegister implements Serializable {
 		this.cep = cep;
 	}
 
+	public MedicalRegister(Long id, String name, Integer crm, Long landlinePhone, Long cellPhone, Integer cep,
+			Set<MedicalSpecialty> specialties) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.crm = crm;
+		this.landlinePhone = landlinePhone;
+		this.cellPhone = cellPhone;
+		this.cep = cep;
+		this.specialties = specialties;
+	}
+
 	public Long getId() {
 		return id;
 	}
