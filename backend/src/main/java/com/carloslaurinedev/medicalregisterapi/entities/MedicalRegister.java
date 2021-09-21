@@ -62,13 +62,7 @@ public class MedicalRegister implements Serializable {
 
 	public MedicalRegister(Long id, String name, Integer crm, Long landlinePhone, Long cellPhone, Integer cep,
 			Set<MedicalSpecialty> specialties) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.crm = crm;
-		this.landlinePhone = landlinePhone;
-		this.cellPhone = cellPhone;
-		this.cep = cep;
+		this();
 		this.specialties = specialties;
 	}
 

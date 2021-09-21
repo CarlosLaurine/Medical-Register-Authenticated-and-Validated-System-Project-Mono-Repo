@@ -44,7 +44,7 @@ public class AppConfig {
 
 	@Bean
 	public boolean instantiateDatabase() {
-		if (!"update".equals(strategy)) {
+		if ("none".equals(strategy)) {
 			return false;
 		}
 		mySqlService.instantiateTestDatabase();

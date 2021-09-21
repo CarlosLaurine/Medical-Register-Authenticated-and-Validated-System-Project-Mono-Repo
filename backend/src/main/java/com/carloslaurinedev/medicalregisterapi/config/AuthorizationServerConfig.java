@@ -42,7 +42,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Autowired
 	private JwtTokenEnhancer jwtTokenEnhancer;
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -53,13 +53,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory()
-		.withClient(clientId)
-		.secret(passwordEncoder.encode(clientSecret))
-		.scopes("read", "write")
-		.authorizedGrantTypes("password", "refresh_token")
-		.accessTokenValiditySeconds(jwtDuration)
-		.refreshTokenValiditySeconds(jwtDuration);
+		clients.inMemory().withClient(clientId).secret(passwordEncoder.encode(clientSecret)).scopes("read", "write")
+				.authorizedGrantTypes("password", "refresh_token").accessTokenValiditySeconds(jwtDuration)
+				.refreshTokenValiditySeconds(jwtDuration);
 	}
 
 	@Override
@@ -69,10 +65,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 		chain.setTokenEnhancers(Arrays.asList(accessTokenConverter, jwtTokenEnhancer));
 
-		endpoints.authenticationManager(authenticationManager)
-		.tokenStore(tokenStore)
-				.accessTokenConverter(accessTokenConverter)
-				.tokenEnhancer(chain).userDetailsService(userDetailsService);
+		endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore)
+				.accessTokenConverter(accessTokenConverter).tokenEnhancer(chain).userDetailsService(userDetailsService);
 
 	}
 
