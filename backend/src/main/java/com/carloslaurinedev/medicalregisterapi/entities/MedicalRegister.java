@@ -61,6 +61,12 @@ public class MedicalRegister implements Serializable {
 	}
 
 	public MedicalRegister(Long id, String name, Integer crm, Long landlinePhone, Long cellPhone, Integer cep,
+			Boolean deleted) {
+		this();
+		this.deleted = deleted;
+	}
+
+	public MedicalRegister(Long id, String name, Integer crm, Long landlinePhone, Long cellPhone, Integer cep,
 			Set<MedicalSpecialty> specialties) {
 		this();
 		this.specialties = specialties;
@@ -116,6 +122,10 @@ public class MedicalRegister implements Serializable {
 
 	public boolean isDeleted() {
 		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public Set<MedicalSpecialty> getSpecialties() {

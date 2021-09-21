@@ -34,10 +34,6 @@ public class MedicalRegisterService {
 	private MedicalSpecialtyRepository medicalSpecialtyRepository;
 
 	@Transactional(readOnly = true)
-	// In case the System runs on a different pom.xml Version than 2.4.4 where the
-	// .getOne() Function is Deprecated and can be easily replaced by the getById()
-	// Function
-	@SuppressWarnings("deprecation")
 	public Page<MedicalRegisterDTO> selectAllPaged(Pageable pageable, Long categoryId, String name) {
 
 		List<MedicalSpecialty> specialties = (categoryId == 0) ? null
@@ -161,11 +157,6 @@ public class MedicalRegisterService {
 	}
 
 	@Transactional
-	// In case the System runs on a different pom.xml Version than 2.4.4 where the
-	// .getOne() Function is Deprecated and can be easily replaced by the getById()
-	// Function
-	@SuppressWarnings("deprecation")
-
 	public MedicalRegisterDTO update(Long id, MedicalRegisterDTO dto) {
 
 		try {
@@ -207,10 +198,6 @@ public class MedicalRegisterService {
 		}
 	}
 
-	// In case the System runs on a different pom.xml Version than 2.4.4 where the
-	// .getOne() Function is Deprecated and can be easily replaced by the getById()
-	// Function
-	@SuppressWarnings("deprecation")
 	private void tranformDtoIntoEntity(MedicalRegister entity, MedicalRegisterDTO dto) {
 
 		entity.setName(dto.getName());

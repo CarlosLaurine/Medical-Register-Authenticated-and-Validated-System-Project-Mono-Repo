@@ -81,9 +81,6 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Transactional
-	// In case the System runs on a different pom.xml Version than 2.4.4 where the
-	// .getOne() Function is Deprecated and can be easily replaced by the getById()
-	// Function
 	public UserDTO update(Long id, UserUpdateDTO dto) {
 
 		try {
@@ -125,10 +122,6 @@ public class UserService implements UserDetailsService {
 		}
 	}
 
-	// In case the System runs on a different pom.xml Version than 2.4.4 where the
-	// .getOne() Function is Deprecated and can be easily replaced by the getById()
-	// Function
-	@SuppressWarnings("deprecation")
 	private void tranformDtoIntoEntity(User entity, UserDTO dto) {
 
 		entity.setFirstName(dto.getFirstName());

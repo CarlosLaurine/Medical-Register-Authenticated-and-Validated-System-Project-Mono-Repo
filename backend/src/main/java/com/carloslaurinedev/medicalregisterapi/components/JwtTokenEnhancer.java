@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import com.carloslaurinedev.medicalregisterapi.entities.User;
 import com.carloslaurinedev.medicalregisterapi.repositories.UserRepository;
 
-@SuppressWarnings("deprecation")
 @Component
 public class JwtTokenEnhancer implements TokenEnhancer {
 
