@@ -1,4 +1,4 @@
-package com.carloslaurinedev.medicalregisterapi.testprofileonly.repositories;
+package com.carloslaurinedev.medicalregisterapi.repositories;
 
 import java.util.Optional;
 
@@ -8,18 +8,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.carloslaurinedev.medicalregisterapi.entities.MedicalRegister;
-import com.carloslaurinedev.medicalregisterapi.repositories.MedicalRegisterRepository;
 import com.carloslaurinedev.medicalregisterapi.tests.Factory;
 
-//OBS: To Run those tests properly H2 Test Database must EXIST, so spring.profiles.active property at application.properties File must be set as "test"
-
+@ActiveProfiles("test")
 @DataJpaTest
 public class MedicalRegisterRepositoryDataJPATests {
 
 	@Autowired
-	MedicalRegisterRepository repository;
+	private MedicalRegisterRepository repository;
 
 	private long existingId;
 	private long nonExistingId;
@@ -39,7 +38,7 @@ public class MedicalRegisterRepositoryDataJPATests {
 		MedicalRegister medicalRegister = Factory.createDefaultMedicalRegister();
 
 		medicalRegister.setId(null);
-		medicalRegister.setName("Carlos Pinho");
+		medicalRegister.setName("CarlosPinho");
 		medicalRegister.setLandlinePhone(36231513L);
 		medicalRegister.setCellPhone(71992945678L);
 		medicalRegister.setCrm(99241);
