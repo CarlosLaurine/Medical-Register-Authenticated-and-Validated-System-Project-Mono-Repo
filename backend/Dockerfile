@@ -25,6 +25,9 @@ SHELL ["/bin/sh", "-c"]
 EXPOSE 5005
 EXPOSE 8080
 
-CMD java ${ADDITIONAL_OPTS} -jar /app/medical-register-api.jar --spring.profiles.active=${PROFILE}
+RUN java ${ADDITIONAL_OPTS} -jar /app/medical-register-api.jar --spring.profiles.active=${PROFILE}
+
+FROM maven1 as tests
+CMD mvn clean test
 
 
