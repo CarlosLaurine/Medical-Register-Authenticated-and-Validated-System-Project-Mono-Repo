@@ -8,12 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.test.context.ActiveProfiles;
 
 import com.carloslaurinedev.medicalregisterapi.entities.MedicalRegister;
 import com.carloslaurinedev.medicalregisterapi.tests.Factory;
 
-@ActiveProfiles("test")
 @DataJpaTest
 public class MedicalRegisterRepositoryDataJPATests {
 
@@ -29,7 +27,7 @@ public class MedicalRegisterRepositoryDataJPATests {
 
 		existingId = 2L;
 		nonExistingId = 25L;
-		countTotalMedicalRegisters = 4L; // Number of pre-existent Insertions at the Test DB H2
+		countTotalMedicalRegisters = 4L; 
 	}
 
 	@Test
