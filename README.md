@@ -2,17 +2,11 @@
 
 ![alt text](https://github.com/CarlosLaurine/Medical-Register-Authenticated-and-Validated-System-Project-Mono-Repo/blob/main/Domain%20Model%20Class%20Diagram%20-%20MedicalRegister%20API%20PNG.png)
 
-# Terminal Command to Run Full Docker-Compose Build on backend Folder in Detached Mode:
+# Terminal Command to Run All Integration and Unit Automatized Maven Tests with complete Docker-Compose Build on backend Folder (Only the Automatized Tests will Run, then the Application will be shut down):
 ```
-docker-compose up --build -d
+docker-compose up --build 
 ``` 
-# Terminal Command in case Container Recreation is needed:
+# Terminal Command in case Container Recreation for Re-Running Automatized Tests is needed (Only the Automatized Tests will Run, then the Application will be shut down):
 ```
 docker-compose up --build --force-recreate
-```
-
-# Terminal Command to Access one of the Running Containers' bash:
-
-```
-docker exec -it <CONTAINER ID> /bin/bash
 ```
