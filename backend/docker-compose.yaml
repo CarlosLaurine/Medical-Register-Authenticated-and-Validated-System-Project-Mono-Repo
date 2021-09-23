@@ -4,23 +4,39 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    image: gcb_medical_register_mysql/api
+    image: gcb_medical_register_mysql_api
     ports:
       - '8080:8080'
       - '5005:5005'
+    depends_on:
+      - db
     environment:
       - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
-      - PROFILE=dev
+      - PROFILE=dev  
+    links:
+      - db  
+  
+  flyway:
+    image: boxfuse/flyway:latest
+    depends_on:
+      - db
+    container_name: flyway_migration
     links:
       - db
+    volumes:
+     - ./db/migration/:/flyway/sql/
+    command: -url=jdbc:mysql://db:3306/gcbmedicalregisterapidb?useUnicode=true&characterEncoding=utf8&useSSL=false -user=admin -password=admin123 -connectRetries=60 migrate
+    
   db:
     image: mysql:5.6
     ports:
-      - '3306:3306'
+      - '3307:3306'
     environment:
       - MYSQL_ROOT_HOST=%
       - MYSQL_DATABASE=gcbmedicalregisterapidb
-      - MYSQL_USER=root
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin123
+      - MYSQL_ROOT_PASSWORD=admin123
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
       - ./docker/volume_mysql:/var/lib/mysql
